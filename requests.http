@@ -1,0 +1,435 @@
+### Создать поставщика 1
+POST http://localhost:8080/api/suppliers
+Content-Type: application/json
+
+{
+  "name": "Поставщик 1"
+}
+
+### Создать поставщика 2
+POST http://localhost:8080/api/suppliers
+Content-Type: application/json
+
+{
+  "name": "Поставщик 2"
+}
+
+### Создать поставщика 3
+POST http://localhost:8080/api/suppliers
+Content-Type: application/json
+
+{
+  "name": "Поставщик 3"
+}
+
+### Создать продукт 1
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Яблоко Голден",
+  "type": "APPLE"
+}
+
+### Создать продукт 2
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Груша Конференция",
+  "type": "PEAR"
+}
+
+### Получить всех поставщиков
+GET http://localhost:8080/api/suppliers
+
+### Получить все продукты
+GET http://localhost:8080/api/products
+
+### Поставщик 1 -> Яблоко Голден
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "productId": 1,
+  "price": 150.00,
+  "dateFrom": "2026-08-01",
+  "dateTo": null
+}
+
+### Поставщик 1 -> Груша Конференция
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "productId": 2,
+  "price": 200.00,
+  "dateFrom": "2026-08-01",
+  "dateTo": null
+}
+
+### Поставщик 2 -> Яблоко Голден
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 2,
+  "productId": 1,
+  "price": 140.00,
+  "dateFrom": "2026-08-01",
+  "dateTo": null
+}
+
+### Поставщик 2 -> Груша Конференция
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 2,
+  "productId": 2,
+  "price": 190.00,
+  "dateFrom": "2026-08-01",
+  "dateTo": null
+}
+
+### Получить все цены
+GET http://localhost:8080/api/supplier-prices
+
+### Первая цена поставщика 3
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 3,
+  "productId": 1,
+  "price": 100.00,
+  "dateFrom": "2026-08-01",
+  "dateTo": null
+}
+
+### Новая цена поставщика 3
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 3,
+  "productId": 1,
+  "price": 120.00,
+  "dateFrom": "2026-09-01",
+  "dateTo": null
+}
+
+### Проверить историю цен
+GET http://localhost:8080/api/supplier-prices
+
+### Поставка 1
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "deliveryDate": "2026-08-30",
+  "items": [
+    {
+      "productId": 1,
+      "weight": 10.5
+    }
+  ]
+}
+
+### Поставка 2
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "deliveryDate": "2026-08-31",
+  "items": [
+    {
+      "productId": 1,
+      "weight": 20.0
+    },
+    {
+      "productId": 2,
+      "weight": 5.0
+    }
+  ]
+}
+
+### Поставка 3
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 2,
+  "deliveryDate": "2026-08-29",
+  "items": [
+    {
+      "productId": 2,
+      "weight": 30.0
+    }
+  ]
+}
+
+### Отчёт за август
+GET http://localhost:8080/api/reports/deliveries?dateFrom=2026-08-01&dateTo=2026-08-31
+
+### Пустой период
+GET http://localhost:8080/api/reports/deliveries?dateFrom=2025-01-01&dateTo=2025-01-31
+
+### Обновить поставщика 3
+PUT http://localhost:8080/api/suppliers/3
+Content-Type: application/json
+
+{
+  "name": "Поставщик 3 обновленный"
+}
+
+### Обновить продукт 2
+PUT http://localhost:8080/api/products/2
+Content-Type: application/json
+
+{
+  "name": "Груша Конференция Premium",
+  "type": "PEAR"
+}
+
+### Проверить поставщиков после обновления
+GET http://localhost:8080/api/suppliers
+
+### Проверить продукты после обновления
+GET http://localhost:8080/api/products
+
+### Пустое имя поставщика -> 400
+POST http://localhost:8080/api/suppliers
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+### Слишком короткое имя поставщика -> 400
+POST http://localhost:8080/api/suppliers
+Content-Type: application/json
+
+{
+  "name": "А"
+}
+
+### Дубликат поставщика -> 400
+POST http://localhost:8080/api/suppliers
+Content-Type: application/json
+
+{
+  "name": "Поставщик 1"
+}
+
+### Пустое название продукта -> 400
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "type": "APPLE"
+}
+
+### Нет типа продукта -> 400
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Яблоко тестовое",
+  "type": null
+}
+
+### Дубликат продукта -> 400
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Яблоко Голден",
+  "type": "APPLE"
+}
+
+### Отрицательная цена -> 400
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "productId": 1,
+  "price": -150.00,
+  "dateFrom": "2026-10-01",
+  "dateTo": null
+}
+
+### Нулевая цена -> 400
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "productId": 1,
+  "price": 0,
+  "dateFrom": "2026-10-01",
+  "dateTo": null
+}
+
+### Нет supplierId -> 400
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": null,
+  "productId": 1,
+  "price": 150.00,
+  "dateFrom": "2026-10-01",
+  "dateTo": null
+}
+
+### Несуществующий поставщик -> 404
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 9999,
+  "productId": 1,
+  "price": 150.00,
+  "dateFrom": "2026-10-01",
+  "dateTo": null
+}
+
+### Несуществующий товар -> 404
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "productId": 9999,
+  "price": 150.00,
+  "dateFrom": "2026-10-01",
+  "dateTo": null
+}
+
+### dateTo раньше dateFrom -> 400
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "productId": 1,
+  "price": 150.00,
+  "dateFrom": "2026-09-01",
+  "dateTo": "2026-08-01"
+}
+
+### Повторная цена с тем же dateFrom -> 400
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 3,
+  "productId": 1,
+  "price": 130.00,
+  "dateFrom": "2026-09-01",
+  "dateTo": null
+}
+
+### Цена задним числом при наличии более поздней -> 400
+POST http://localhost:8080/api/supplier-prices
+Content-Type: application/json
+
+{
+  "supplierId": 3,
+  "productId": 1,
+  "price": 110.00,
+  "dateFrom": "2026-08-15",
+  "dateTo": null
+}
+
+### Поставка без товаров -> 400
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "deliveryDate": "2026-08-30",
+  "items": []
+}
+
+### Отрицательный вес -> 400
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "deliveryDate": "2026-08-30",
+  "items": [
+    {
+      "productId": 1,
+      "weight": -10
+    }
+  ]
+}
+
+### Нулевой вес -> 400
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "deliveryDate": "2026-08-30",
+  "items": [
+    {
+      "productId": 1,
+      "weight": 0
+    }
+  ]
+}
+
+### Нет productId -> 400
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "deliveryDate": "2026-08-30",
+  "items": [
+    {
+      "productId": null,
+      "weight": 10
+    }
+  ]
+}
+
+### Несуществующий товар -> 404
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+  "supplierId": 1,
+  "deliveryDate": "2026-08-30",
+  "items": [
+    {
+      "productId": 9999,
+      "weight": 10
+    }
+  ]
+}
+
+### Неверный период -> 400
+GET http://localhost:8080/api/reports/deliveries?dateFrom=2026-09-01&dateTo=2026-08-01
+
+### Удаление поставщика с зависимостями -> 409
+DELETE http://localhost:8080/api/suppliers/1
+
+### Удаление товара с зависимостями -> 409
+DELETE http://localhost:8080/api/products/1
+
+### Несуществующий поставщик -> 404
+DELETE http://localhost:8080/api/suppliers/9999
+
+### Несуществующий товар -> 404
+DELETE http://localhost:8080/api/products/9999

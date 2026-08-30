@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Delivery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Supplier Delivery</h1>
+
+    <section>
+        <h2>Поставщики</h2>
+
+        <div class="form-row">
+            <input
+                    id="supplierName"
+                    type="text"
+                    placeholder="Название поставщика"
+            >
+
+            <button onclick="createSupplier()">
+                Добавить
+            </button>
+
+            <button onclick="loadSuppliers()">
+                Обновить список
+            </button>
+        </div>
+
+        <div id="supplierMessage"></div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+            </tr>
+            </thead>
+
+            <tbody id="suppliersTable"></tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Цены поставщиков</h2>
+
+        <div class="form-row">
+            <select id="priceSupplier"></select>
+
+            <select id="priceProduct"></select>
+
+            <input
+                    id="priceValue"
+                    type="number"
+                    step="0.01"
+                    placeholder="Цена"
+            >
+
+            <input
+                    id="priceDateFrom"
+                    type="date"
+            >
+
+            <button onclick="createSupplierPrice()">
+                Добавить цену
+            </button>
+        </div>
+
+        <div id="priceMessage"></div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Поставщик</th>
+                <th>Продукт</th>
+                <th>Цена</th>
+                <th>С</th>
+                <th>По</th>
+            </tr>
+            </thead>
+
+            <tbody id="pricesTable"></tbody>
+        </table>
+    </section>
+
+
+    <section>
+        <h2>Создание поставки</h2>
+
+        <div class="form-row">
+            <select id="deliverySupplier"></select>
+
+            <input
+                    id="deliveryDate"
+                    type="date"
+            >
+        </div>
+
+        <div class="form-row">
+            <select id="deliveryProduct"></select>
+
+            <input
+                    id="deliveryWeight"
+                    type="number"
+                    step="0.01"
+                    placeholder="Вес"
+            >
+
+            <button onclick="addDeliveryItem()">
+                Добавить товар
+            </button>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Продукт</th>
+                <th>Вес</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody id="deliveryItemsTable"></tbody>
+        </table>
+
+        <div class="form-row">
+            <button onclick="createDelivery()">
+                Создать поставку
+            </button>
+        </div>
+
+        <div id="deliveryMessage"></div>
+    </section>
+
+    <section>
+        <h2>Продукты</h2>
+
+        <div class="form-row">
+            <input
+                    id="productName"
+                    type="text"
+                    placeholder="Название продукта"
+            >
+
+            <select id="productType">
+                <option value="APPLE">Яблоко</option>
+                <option value="PEAR">Груша</option>
+            </select>
+
+            <button onclick="createProduct()">
+                Добавить
+            </button>
+
+            <button onclick="loadProducts()">
+                Обновить список
+            </button>
+        </div>
+
+        <div id="productMessage"></div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Тип</th>
+            </tr>
+            </thead>
+
+            <tbody id="productsTable"></tbody>
+        </table>
+    </section>
+
+
+    <section>
+        <h2>Отчёт по поставкам</h2>
+
+        <div class="form-row">
+            <label>
+                С:
+                <input id="dateFrom" type="date">
+            </label>
+
+            <label>
+                По:
+                <input id="dateTo" type="date">
+            </label>
+
+            <button onclick="loadReport()">
+                Получить отчёт
+            </button>
+        </div>
+
+        <div id="reportMessage"></div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Поставщик</th>
+                <th>Продукт</th>
+                <th>Общий вес</th>
+                <th>Общая стоимость</th>
+            </tr>
+            </thead>
+
+            <tbody id="reportTable"></tbody>
+        </table>
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
