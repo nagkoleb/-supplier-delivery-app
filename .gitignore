@@ -12,3 +12,11 @@ target/
 
 # Logs
 *.log
+# Node.js dependencies
+node_modules/
+
+# Cypress generated artifacts
+cypress/screenshots/
+cypress/videos/
+cypress/reports/
+cypress/downloads/

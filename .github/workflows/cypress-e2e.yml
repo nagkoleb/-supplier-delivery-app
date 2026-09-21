@@ -1,0 +1,80 @@
+name: Cypress E2E
+
+on:
+  push:
+    branches:
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  cypress:
+    name: Cypress tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17
+
+        env:
+          POSTGRES_DB: supplier_delivery
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd "pg_isready -U postgres -d supplier_delivery"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+
+      - name: Run Cypress and create HTML report
+        uses: cypress-io/github-action@v7
+        with:
+          install-command: npm ci
+          start: bash ./mvnw --batch-mode spring-boot:run
+          wait-on: "http://localhost:8080"
+          wait-on-timeout: 120
+          browser: chrome
+
+      - name: Create JUnit XML report
+        if: always()
+        run: npm run cy:run:junit
+
+      - name: Upload Cypress reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-results-${{ github.run_number }}
+          path: |
+            cypress/reports/
+            cypress/screenshots/
+            cypress/videos/
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 14
